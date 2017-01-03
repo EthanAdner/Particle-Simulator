@@ -1,0 +1,5 @@
+public class SimulationDisplay{
+	public static void main(String[] args){
+		SimulationCalculator a = new SimulationCalculator(2,1);
+	}
+}
