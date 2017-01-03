@@ -1,0 +1,68 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
+
+public class SimulationCalculator extends JFrame{
+	public Particle[] particleList=new Particle[0];
+	private int particleListLength;
+	
+	private Timer repaintTimer = new Timer(100, new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Hello");
+			//RUN();
+		}
+	});
+	
+	private void setInitialPosition(){
+		double[] position ={0,0};
+		for(int i=0; i<particleListLength; i++){
+			position[0]=10*i;
+			position[1]=10*i;
+			particleList[i].editPosition(position);
+		}
+	}
+	
+	private double[] getDistance(double[] currentPosition){
+		double[] totalDistance={0,0};
+		for(Particle x:particleList){
+			totalDistance[0]+=currentPosition[0]-x.getPosition()[0];
+			totalDistance[1]+=currentPosition[1]-x.getPosition()[1];
+		}
+		return totalDistance;
+	}
+	
+	private void RUN(){
+		
+	}
+	
+	
+	public SimulationCalculator(double FPS, int particleNumber){
+		this.particleList = new Particle[particleNumber];
+		this.particleListLength = particleNumber;
+		setInitialPosition();
+		
+		this.setSize(2000, 800);// Change this you fuck
+		this.setTitle("Simulator");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.add(new Draw());
+		this.setVisible(true);
+		repaintTimer.setRepeats(true);
+		repaintTimer.start();
+	}
+	
+	private class Draw extends JComponent {
+		public void paint(Graphics g) {
+			Graphics2D g2d = (Graphics2D) g;
+			
+		}
+	}
+	
+
+}
