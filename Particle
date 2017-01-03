@@ -1,0 +1,64 @@
+import java.awt.geom.Ellipse2D;
+
+public class Particle {
+	private double[] position = new double[2];
+	private double[] acceleration = new double[2];
+	private double[] velocity = new double[2];
+	private double mass;
+	private boolean staticPositionEdit = false;
+	private Ellipse2D.Double screenShape;
+
+	public void calculateForce(double[] force) {
+		// changes the force into the acceleration by dividing by mass
+		// adds acceleration to velocity
+		for (int i = 0; i < 1; i++) {
+			acceleration[i] = force[i] / mass;
+			velocity[i] += acceleration[i];
+		}
+	}
+
+	public double[] applyForce(double[] force) {
+		// adds the current velocity to the position 
+		calculateForce(force);
+		position[0] += velocity[0];
+		position[1] += velocity[1];
+		return position;
+	}
+
+	public boolean editPosition(double[] newPosition) {
+		if (staticPositionEdit == true) {
+			return false;
+		}
+		position[0] = newPosition[0];
+		position[1] = newPosition[1];
+		staticPositionEdit = true;
+		return true;
+	}
+	
+	public double[] getPosition(){
+		return position;
+	}
+
+	public void updateCallBack() {
+		getScreenShape().x = position[0];
+		getScreenShape().y = position[1];
+	}
+
+	public Ellipse2D.Double getScreenShape() {
+		return screenShape;
+	}
+
+	public void setScreenShape(Ellipse2D.Double screenShape) {
+		this.screenShape = screenShape;
+	}
+
+	public Particle(double mass) {
+		position[0] = 0;
+		position[1] = 0;
+		acceleration[0] = 0;
+		acceleration[1] = 0;
+		velocity[0] = 0;
+		velocity[1] = 0;
+		this.mass = mass;
+	}
+}
